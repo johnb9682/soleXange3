@@ -20,12 +20,12 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" /> 
 	
 	<!-- Enable annotation-based controllers using @Controller annotations --> 
-	<!-- currentUserInterceptor in the package com.msgpost.security.CurrentUserIntercepter 
+	<!-- currentUserInterceptor in the package com.msgpost.security.CurrentUserIntercepter -->
     <bean id="annotationUrlMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors" ref="currentUserInterceptor"/>
     </bean>
-    -->   
-    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after the lifecycleBeanProcessor has run 
+       
+    <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after the lifecycleBeanProcessor has run -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor" />
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 	    <property name="securityManager" ref="securityManager"/>
@@ -36,7 +36,7 @@
 		<property name="prefix"><value>/WEB-INF/page/</value></property> 
 		<property name="suffix"><value>.jsp</value></property>
 	</bean>  
-	-->
+	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!--<property name="maxUploadSize" value="10485760"></property> -->
 	</bean> 

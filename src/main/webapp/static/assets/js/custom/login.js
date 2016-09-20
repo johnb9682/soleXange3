@@ -4,7 +4,7 @@ function getContextPath() {
 	var result = pathName.substr(0, index + 1);
 	return result;
 }
-//msgpost_4
+//soleXange_1
 jQuery(function($) {
 	$(document).on('click', '.toolbar a[data-target]', function(e) {
 		e.preventDefault();
@@ -143,7 +143,7 @@ jQuery(function($) {
 				complete : function(xmlRequest) {
 					var returninfo = eval("(" + xmlRequest.responseText + ")");
 					if (returninfo.result == 1) {
-						document.location.href = getContextPath() + "/home#page/message";
+						document.location.href = getContextPath() + "/home#page/user/userprofile";
 					} else if (returninfo.result == -1) {
 						$("#loginTip").html("用户名有误或已被禁用");
 					} else if (returninfo.result == -2) {
@@ -268,7 +268,7 @@ jQuery(function($) {
 				complete : function(xmlRequest) {
 					var returninfo = eval("(" + xmlRequest.responseText + ")");
 					if (returninfo.result == 1) {
-						document.location.href = getContextPath() + "/home#page/message";
+						document.location.href = getContextPath() + "/home#page/user/userprofile";
 					} else if (returninfo.result == -1) {
 						$("#registerTip").html("此邮箱已被注册");
 					} else {
