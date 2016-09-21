@@ -134,31 +134,36 @@
                 <!-- /.sidebar-shortcuts -->
                 <ul class="nav nav-list">
                 	<li class="">
-                        <a href="home#page/message" class="dropdown-toggle">
+                        <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-comments-o"></i>
-                            <span class="menu-text">Message</span>
+                            <span class="menu-text">Management</span>
                             <b class="arrow fa fa-angle-down"></b>
                         </a> 
 						<b class="arrow"></b>
 						<ul class="submenu"> 
 	                        <li class="">
-                                <a data-url="page/message" href="home#page/message">
-                                    <i class="menu-icon fa fa-comments-o"></i>MessagePost 
+                                <a data-url="page/category/category" href="home#page/category/category">
+                                    <i class="menu-icon fa fa-comments-o"></i>Category 
                                 </a> 
                             </li> 
-         				</ul>                    
+                            <li class="">
+                                <a data-url="page/user/userprofile" href="home#page/user/userprofile">
+                                    <i class="menu-icon fa fa-user"></i>Profile
+                                </a> 
+                            </li> 
+         				</ul>                     
                     </li>
                     <li class="">
-                        <a href="home#page/user/userprofile" class="dropdown-toggle">
+                        <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-user"></i>
-                            <span class="menu-text">User</span>
+                            <span class="menu-text">Sale</span>
                             <b class="arrow fa fa-angle-down"></b>
                         </a> 
 						<b class="arrow"></b>
 						<ul class="submenu"> 
 	                        <li class="">
-                                <a data-url="page/user/userprofile" href="home#page/user/userprofile">
-                                    <i class="menu-icon fa fa-user"></i>Profile
+                                <a data-url="page/product/newproduct" href="home#page/product/newproduct">
+                                    <i class="menu-icon fa fa-user"></i>newProduct
                                 </a> 
                             </li> 
          				</ul>                    
