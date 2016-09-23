@@ -62,7 +62,14 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 	
 	@RequestMapping("/newproduct")
 	public String newProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("New Product");
 		return "back/product/newproduct";
+	}
+	
+	@RequestMapping("/uploadimage")
+	public String imageUpload(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("Upload Images");
+		return "back/product/imageupload";
 	}
 
 	@RequestMapping(value = "/allproducts", method = { RequestMethod.POST, RequestMethod.GET })
@@ -162,8 +169,9 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 			productService.merge(entity);
 		} else if (CMD_NEW.equals(parameter.getCmd())) {
 			productService.persist(entity);
-		} 
-		writeJSON(response, parameter);
+		}  
+		newProduct(request, response);
+		//writeJSON(response, parameter);
 	}
 
 	// 操作字典的删除、导出Excel、字段判断和保存

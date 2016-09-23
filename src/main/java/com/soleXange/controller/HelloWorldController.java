@@ -34,6 +34,7 @@ public class HelloWorldController {
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession(); 
+		System.out.println("Render index page");
 		if (session.getAttribute(com.soleXange.core.Constant.SESSION_SYS_USER) == null) { 
 			return new ModelAndView();
 		} else {

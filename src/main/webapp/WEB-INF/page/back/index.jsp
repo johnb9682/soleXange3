@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="${contextPath}/static/assets/css/ace-fonts.css" />
         <link rel="stylesheet" href="${contextPath}/static/assets/css/activities-serverload.css" />
         <!-- ace styles -->
-        <link rel="stylesheet" href="${contextPath}/static/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+        <link rel="stylesheet" href="${contextPath}/static/assets/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />  
         <!--[if lte IE 9]>
 			<link rel="stylesheet" href="${contextPath}/static/assets/css/ace-part2.css" class="ace-main-stylesheet" />
 		<![endif]-->
@@ -317,9 +317,9 @@
                         <!-- /.ace-settings-box -->
                     </div>
                     <!-- /.ace-settings-container -->
-                    <!-- /section:settings.box -->
+                    <!-- /section:settings.box --> 
                     <div class="page-content-area" data-ajax-content="true">
-                        <!-- ajax content goes here -->
+                        <!-- ajax content goes here --> 
                     </div>
                     <!-- /.page-content-area -->
                 </div>

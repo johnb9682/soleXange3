@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 
+<!-- --> 
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.custom.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/chosen.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/datepicker.css" />
@@ -9,7 +10,8 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/css/daterangepicker.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-datetimepicker.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/colorpicker.css" />
-<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-editable.css" />
+<link rel="stylesheet" href="${contextPath}/static/assets/css/bootstrap-editable.css" /> 
+<link rel="stylesheet" type="text/css" href="${contextPath}/static/assets/js/realuploader/css/classic.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
@@ -21,10 +23,42 @@
 <div class="row">
 	<div class="col-xs-12">
 		<!-- PAGE CONTENT BEGINS -->
-		<form class="form-horizontal" role="form" action='${contextPath}/product/operateproduct?oper=add' method='post'> 
+		<form id="fileupload" class="form-horizontal" role="form" action='${contextPath}/product/operateproduct?oper=add' method='post'> 
 			
 			<div class="row">
-				<div class="col-xs-8 ">
+				<div class="col-xs-12">  
+					<div class="widget-box">
+						<div class="widget-header">
+							<h4 class="widget-title">Product Images Upload</h4>
+
+							<div class="widget-toolbar">
+								<a href="#" data-action="collapse">
+									<i class="ace-icon fa fa-chevron-up"></i>
+								</a>
+
+								<a href="#" data-action="close">
+									<i class="ace-icon fa fa-times"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="widget-body">
+							<div class="widget-main">
+								<div class="panel panel-primary"> 
+					                <div class="panel-body"> 
+			       	               		<div id="imageuploader" ></div>    
+			     	               </div>
+					            </div> 
+							</div>
+						</div>
+					</div>	 
+				</div>
+			</div>
+			
+			<div class="space-16"></div>  
+			
+			<div class="row">
+				<div class="col-xs-12 ">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Product Name</h4> 
@@ -42,7 +76,7 @@
 			<div class="space-16"></div>  
 			
 			<div class="row">
-				<div class="col-xs-4 ">
+				<div class="col-xs-6 ">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Price </h4> 
@@ -54,7 +88,7 @@
 						</div>
 					</div>
 				</div><!-- /.span -->  
-				<div class="col-xs-4 ">
+				<div class="col-xs-6 ">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Size</h4> 
@@ -71,7 +105,7 @@
 			<div class="space-16"></div>  
 			
 			<div class="row">
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-6">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Product Description</h4> 
@@ -90,7 +124,7 @@
 						</div>
 					</div>
 				</div><!-- /.span --> 
-				<div class="col-xs-4 ">
+				<div class="col-xs-6 ">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Contact Info </h4> 
@@ -107,7 +141,7 @@
 			<div class="space-16"></div>  
 
 			<div class="row"> 
-				<div class="col-sm-4">
+				<div class="col-sm-6">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Product Images Upload</h4>
@@ -152,7 +186,7 @@
 					</div>
 				</div> 
 
-				<div class="col-xs-12 col-sm-4">
+				<div class="col-xs-12 col-sm-6">
 					<div class="widget-box">
 						<div class="widget-header">
 							<h4 class="widget-title">Product Category</h4>
@@ -190,29 +224,11 @@
 
 			<div class="space-24"></div>	  
 			 			
-			<div class="hr hr-24"></div>
-			
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 center">
-					<div>
-						<!-- #section:pages/profile.picture -->
-						<span class="profile-picture">
-							<img id="avatar" class="editable img-responsive" alt="upload product profile" src="http://localhost:8080/jeefwmvn/static/upload/attachment/201608/20160824182655754648.jpg" />
-						</span>
-
-						<!-- /section:pages/profile.picture -->
-						<div class="space-4"></div>
-
-					</div>
-
-					<div class="space-6"></div>
-
-				</div>
-			</div>
+			<div class="hr hr-24"></div>  
 			 
 			<div class="row">
 				<div class="clearfix form-actions">
-					<div class="col-md-offset-3 col-md-9">
+					<div class="col-xs-12 center">
 					
 						<button class="btn btn-info" type="submit" id="submit" value="submit"> 
 							<i class="ace-icon fa fa-check bigger-110"></i>
@@ -238,9 +254,27 @@
 
 <!--[if lte IE 8]>
   <script src="${contextPath}/static/assets/js/excanvas.js"></script>
-<![endif]-->
+<![endif]-->  
+
 <script type="text/javascript">
-	var scripts = [null,"${contextPath}/static/assets/js/jquery-ui.custom.js","${contextPath}/static/assets/js/jquery.ui.touch-punch.js","${contextPath}/static/assets/js/chosen.jquery.js","${contextPath}/static/assets/js/fuelux/fuelux.spinner.js","${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js","${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js","${contextPath}/static/assets/js/date-time/moment.js","${contextPath}/static/assets/js/date-time/daterangepicker.js","${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js","${contextPath}/static/assets/js/bootstrap-colorpicker.js","${contextPath}/static/assets/js/jquery.knob.js","${contextPath}/static/assets/js/jquery.autosize.js","${contextPath}/static/assets/js/jquery.inputlimiter.1.3.1.js","${contextPath}/static/assets/js/jquery.maskedinput.js","${contextPath}/static/assets/js/bootstrap-tag.js", null]
+	var scripts = [null,
+	               "${contextPath}/static/assets/js/jquery-ui.custom.js",
+	               "${contextPath}/static/assets/js/jquery.ui.touch-punch.js",
+	               "${contextPath}/static/assets/js/chosen.jquery.js",
+	               "${contextPath}/static/assets/js/fuelux/fuelux.spinner.js",
+	               "${contextPath}/static/assets/js/date-time/bootstrap-datepicker.js",
+	               "${contextPath}/static/assets/js/date-time/bootstrap-timepicker.js",
+	               "${contextPath}/static/assets/js/date-time/moment.js",
+	               "${contextPath}/static/assets/js/date-time/daterangepicker.js",
+	               "${contextPath}/static/assets/js/date-time/bootstrap-datetimepicker.js",
+	               "${contextPath}/static/assets/js/bootstrap-colorpicker.js",
+	               "${contextPath}/static/assets/js/jquery.knob.js",
+	               "${contextPath}/static/assets/js/jquery.autosize.js",
+	               "${contextPath}/static/assets/js/jquery.inputlimiter.1.3.1.js",
+	               "${contextPath}/static/assets/js/jquery.maskedinput.js",
+	               "${contextPath}/static/assets/js/bootstrap-tag.js",  
+	               "${contextPath}/static/assets/js/realuploader/js/realuploader-min.js",
+	               null]
 	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
 	  //inline scripts related to this page
 	  	function getContextPath() {
@@ -251,6 +285,30 @@
 		}
 	  
 	 	jQuery(function($) {
+	 		
+	 		var uploader = new RealUploader("#imageuploader", {
+	            accept: "image/*",
+	            url: getContextPath() + "/attachment/uploadImages",
+	            data:
+	            	{
+	            		productid: 1
+	            	},
+	            dropArea: '#div|a',
+	            resizeImage: {
+	                maxWidth:           200,
+	                maxHeight:          0,
+	                outputQuality:      1,
+	                scaleMethod:        3,
+	                outputFormat:       null,
+	                allowOverResize:    false,
+	                keepExif:           false,
+	                keepAspectRatio:    true,
+	                unsharpAmount:      0,
+	                unsharpThreshold:   0,
+	                alpha:              true
+	            },
+	        });
+	 		
 			$('#id-disable-check').on('click', function() {
 				var inp = $('#form-input-readonly').get(0);
 				if(inp.hasAttribute('disabled')) {
