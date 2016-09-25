@@ -25,18 +25,18 @@ public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
 	public List<Object[]> queryProductWithProductID(Integer productid) {
 		/*
 		 * SELECT * FROM 
-		 * johnb9682.product LEFT JOIN johnb9682.attachment 
-		 * ON johnb9682.product.productid = johnb9682.attachment.type_id
-		 * WHERE johnb9682.product.productid = 2;
+		 * solexange.product LEFT JOIN solexange.attachment 
+		 * ON solexange.product.productid = solexange.attachment.type_id
+		 * WHERE solexange.product.productid = 2;
 		 */
-		Query query = this.getSession().createSQLQuery("SELECT johnb9682.product.productid, johnb9682.attachment.file_path FROM johnb9682.product LEFT JOIN johnb9682.attachment ON johnb9682.product.productid = johnb9682.attachment.type_id WHERE johnb9682.product.productid = " + productid + " AND johnb9682.attachment.type = 3");
+		Query query = this.getSession().createSQLQuery("SELECT solexange.product.productid, solexange.attachment.file_path FROM solexange.product LEFT JOIN solexange.attachment ON solexange.product.productid = solexange.attachment.type_id WHERE solexange.product.productid = " + productid + " AND solexange.attachment.type = 1");
 		List<Object[]> list = query.list();
 		return query.list();  
 	}
 
 	@Override
 	public Object[] querySingleProductInfo(Integer productid) {
-		Query query = this.getSession().createSQLQuery("SELECT * FROM johnb9682.product where johnb9682.product.productid = " + productid);
+		Query query = this.getSession().createSQLQuery("SELECT * FROM solexange.product where solexange.product.productid = " + productid);
 		List<Object[]> list = query.list();
 		return list.get(0);  
 	}

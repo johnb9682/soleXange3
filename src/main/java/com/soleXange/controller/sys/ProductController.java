@@ -19,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soleXange.core.Constant;
 import com.soleXange.core.JavaEEFrameworkBaseController;
@@ -41,6 +42,48 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 
 	@Resource
 	private ProductService productService;
+	
+	/*
+	 *  display all products in a gallary wall
+	 */
+	@RequestMapping(value = "/productgallary", method = { RequestMethod.POST, RequestMethod.GET })
+	public String allProductGallary(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException {  
+		String sortedObject = "sidx";
+		String sortedValue = "sord";
+		String filters = "filters";
+		Product Product = new Product(); 
+		
+		Product.setFirstResult((1 - 1) * 10); 
+		Map<String, String> sortedCondition = new HashMap<String, String>();
+		sortedCondition.put(sortedObject, sortedValue);
+		Product.setSortedConditions(sortedCondition);
+		QueryResult<Product> queryResult = productService.doPaginationQuery(Product); 
+		List<Product> ProductWithSubList = productService.queryProductWithSubList(queryResult.getResultList()); 
+		map.addAttribute("products", ProductWithSubList);
+		return "back/product/productgallary";
+	}
+	
+	/* 
+	 *  展示单个product 的信息
+	 */ 
+	@RequestMapping(value = "/productdetail", method = { RequestMethod.POST, RequestMethod.GET })
+	public String productDetail(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException { 
+		Integer productid = Integer.valueOf(request.getParameter("productid"));
+		JSONArray jsonArray = new JSONArray(); 
+		List<Object[]> list = productService.queryProductWithProductID(productid);
+		for(ListIterator<Object[]> iter = list.listIterator(); iter.hasNext();){ 
+			Object[] element = iter.next();    
+			JSONObject obj = new JSONObject();  
+			obj.put("productid", element[0]);  
+			obj.put("imagepath", element[1]);  
+		    jsonArray.add(obj);    
+		    System.out.println(obj);
+		} 
+		Map<String, Object> result = new HashMap<String, Object>(); 
+		result.put("data", jsonArray);
+		map.addAttribute("products", result);
+		return "back/product/productdetail";
+	} 
 
 	// 查询字典的表格，包括分页、搜索和排序
 	@RequestMapping(value = "/getproduct", method = { RequestMethod.POST, RequestMethod.GET })
@@ -63,8 +106,8 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 	@RequestMapping("/newproduct")
 	public String newProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("New Product");
-		return "back/product/newproduct";
-	}
+		return "back/product/newproduct_text";
+	} 
 	
 	@RequestMapping("/uploadimage")
 	public String imageUpload(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -72,23 +115,23 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 		return "back/product/imageupload";
 	}
 
-	@RequestMapping(value = "/allproducts", method = { RequestMethod.POST, RequestMethod.GET })
-	public String allProduct(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException { 
-		
-		String sortedObject = request.getParameter("sidx");
-		String sortedValue = request.getParameter("sord");
-		String filters = request.getParameter("filters");
-		Product Product = new Product(); 
-		
-		Product.setFirstResult((1 - 1) * 10); 
-		Map<String, String> sortedCondition = new HashMap<String, String>();
-		sortedCondition.put(sortedObject, sortedValue);
-		Product.setSortedConditions(sortedCondition);
-		QueryResult<Product> queryResult = productService.doPaginationQuery(Product); 
-		List<Product> ProductWithSubList = productService.queryProductWithSubList(queryResult.getResultList()); 
-		map.addAttribute("products", ProductWithSubList);
-		return "back/product/result";
-	}
+//	@RequestMapping(value = "/allproducts", method = { RequestMethod.POST, RequestMethod.GET })
+//	public String allProduct(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException { 
+//		
+//		String sortedObject = request.getParameter("sidx");
+//		String sortedValue = request.getParameter("sord");
+//		String filters = request.getParameter("filters");
+//		Product Product = new Product(); 
+//		
+//		Product.setFirstResult((1 - 1) * 10); 
+//		Map<String, String> sortedCondition = new HashMap<String, String>();
+//		sortedCondition.put(sortedObject, sortedValue);
+//		Product.setSortedConditions(sortedCondition);
+//		QueryResult<Product> queryResult = productService.doPaginationQuery(Product); 
+//		List<Product> ProductWithSubList = productService.queryProductWithSubList(queryResult.getResultList()); 
+//		map.addAttribute("products", ProductWithSubList);
+//		return "back/product/result";
+//	}
 	
 	@RequestMapping(value = "/getproductinfo", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getProductProfileImage(HttpServletRequest request, HttpServletResponse response) throws Exception {   
@@ -111,7 +154,7 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 			obj.put("src", element.getProfileimage()); 
 			obj.put("srct", element.getProfileimage());    
 			obj.put("title", element.getName());  
-			obj.put("destURL", "http://localhost:8080/jeefwmvn/sys/sysuser/home#page/productdetail?productid="+element.getProductid());  
+			obj.put("destURL", "http://localhost:8080/soleXange/home#page/product/productdetail?productid="+element.getProductid());  
 			obj.put("description", "Price: " + element.getPrice());  
 			obj.put("size", element.getSize());  
 			obj.put("price", element.getPrice());  
@@ -122,6 +165,9 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 		writeJSON(response, result);   
 	}
 	
+	/*
+	 *  get product basic information
+	 */
 	@RequestMapping(value = "/getsingleproductinfo", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getSingleProductInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Integer productid = Integer.valueOf(request.getParameter("productid"));
@@ -143,25 +189,33 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 		writeJSON(response, result); 
 	} 
 	
+	/*
+	 *  get product images
+	 */
 	@RequestMapping(value = "/getsingleproductimages", method = { RequestMethod.POST, RequestMethod.GET })
 	public void getSingleProductImages(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Integer productid = Integer.valueOf(request.getParameter("productid"));
-		JSONArray jsonArray = new JSONArray(); 
-		List<Object[]> list = productService.queryProductWithProductID(productid);
-		for(ListIterator<Object[]> iter = list.listIterator(); iter.hasNext();){ 
-			Object[] element = iter.next();    
-			JSONObject obj = new JSONObject();  
-			obj.put("productid", element[0]);  
-			obj.put("imagepath", element[1]);  
-		    jsonArray.add(obj);    
-		    System.out.println(obj);
-		} 
-		Map<String, Object> result = new HashMap<String, Object>(); 
-		result.put("data", jsonArray);
-		writeJSON(response, result); 
+		if(request.getParameter("productid")!=null){
+			Integer productid = Integer.valueOf(request.getParameter("productid"));
+			JSONArray jsonArray = new JSONArray();  
+			List<Object[]> list = productService.queryProductWithProductID(productid);
+			for(ListIterator<Object[]> iter = list.listIterator(); iter.hasNext();){ 
+				Object[] element = iter.next();    
+				JSONObject obj = new JSONObject();  
+				obj.put("productid", element[0]);  
+				obj.put("imagepath", element[1]);  
+			    jsonArray.add(obj);    
+			    System.out.println(obj);
+			} 
+			Map<String, Object> result = new HashMap<String, Object>(); 
+			result.put("data", jsonArray);
+			writeJSON(response, result); 
+		}
+		else{
+			System.out.println("No product ID");
+		}
 	} 
 	
-	// 保存字典的实体Bean
+	// 保存product的实体Bean
 	@RequestMapping(value = "/saveproduct", method = { RequestMethod.POST, RequestMethod.GET })
 	public void doSave(Product entity, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ExtJSBaseParameter parameter = ((ExtJSBaseParameter) entity);
@@ -170,10 +224,84 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 		} else if (CMD_NEW.equals(parameter.getCmd())) {
 			productService.persist(entity);
 		}  
-		newProduct(request, response);
+		//newProductImages(entity, request, response);
 		//writeJSON(response, parameter);
 	}
+	
+	/*  用户新建，保存product信息，
+	 *  包括name, price, description, contactinfo, size, categoryid
+	 */
+	@RequestMapping(value = "/saveproducttext", method = { RequestMethod.POST, RequestMethod.GET })
+	public void saveProductText(HttpServletRequest request, HttpServletResponse response) throws Exception {  
+		System.out.println("Save Product Text");
+		Map<String, Object> result = new HashMap<String, Object>();
+		String name = request.getParameter("name");
+		String price = request.getParameter("price");
+		String description = request.getParameter("description");
+		String contactinfo = request.getParameter("contactinfo");
+		String size = request.getParameter("size");
+		String categoryid = request.getParameter("categoryid");
+		System.out.println(description); 
+		if (StringUtils.isBlank(name) || StringUtils.isBlank(price)) { 
+			//response.setStatus(HttpServletResponse.SC_LENGTH_REQUIRED); 
+			result.put("message", "fail");
+			result.put("result", -1);
+			result.put("productid", -1);
+			writeJSON(response, result);
+			
+//			return new ModelAndView("back/product/newproduct_text");
+		} else {
+			Product entity = new Product();
+			
+			entity.setName(name);
+			entity.setPrice(Integer.valueOf(price));
+			entity.setDescription(description);
+			entity.setSize(Integer.valueOf(size));
+			entity.setCategoryid(Integer.valueOf(categoryid));
+			entity.setContactinfo(contactinfo); 
+			entity.setCmd("new");
+			doSave(entity, request, response);   
+			result.put("message", "success");
+			result.put("result", 1);
+			String[] propName = new String[3];
+			propName[0] = "name";
+			propName[1] = "description";
+			propName[2] = "contactinfo";
+			Object[] propValue = new String[3];
+			propValue[0] = name;
+			propValue[1] = description;
+			propValue[2] = contactinfo;
+			//propValue[1] = Integer.valueOf(price); 
+			//price get problem
+			//should use String
+			Product product = productService.getByProerties(propName, propValue);
+			result.put("productid", product.getProductid());
+			writeJSON(response, result);
+//			return new ModelAndView("back/product/newproduct_images", "product", entity);
+		} 
+		
+	}
 
+	/*  用户新建，保存product images，
+	 *  包括product 中的单独image
+	 *  和attachment中的任意数量images
+	 */
+	@RequestMapping("/newproduct_images")
+	public ModelAndView newProductImages(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("New Product Images"); 
+		String productid_string = "";
+		productid_string = request.getParameter("productid");
+		Product product = null;
+		if(productid_string!=null){
+			int productid = Integer.valueOf(productid_string); 
+			System.out.println(productid);
+			product = productService.get(productid);
+			System.out.println(product.getName());
+			System.out.println(product.getProductid());
+		}  
+		return new ModelAndView("back/product/newproduct_images", "product", product);
+	}
+	
 	// 操作字典的删除、导出Excel、字段判断和保存
 	@RequestMapping(value = "/operateproduct", method = { RequestMethod.POST, RequestMethod.GET })
 	public void operateProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {

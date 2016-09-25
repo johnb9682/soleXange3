@@ -44,8 +44,11 @@ import com.soleXange.model.sys.User;
 import com.soleXange.service.sys.UserService;
 import com.soleXange.core.JavaEEFrameworkBaseController;
 import com.soleXange.model.sys.Attachment;
+import com.soleXange.model.sys.Product;
 import com.soleXange.service.sys.AttachmentService;
+import com.soleXange.service.sys.ProductService;
 
+import core.support.ExtJSBaseParameter;
 import core.util.JavaEEFrameworkUtils;
 import net.sf.json.JSONObject;
 
@@ -64,8 +67,15 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 	@Resource
 	private UserService userService;
 	
+	@Resource
+	private ProductService productService;
+	
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS"); 
 	
+	/*  用户新建，保存product images，
+	 *  包括product 中的单独image
+	 *  和attachment中的任意数量images
+	 */
 	@RequestMapping(value = "/uploadImages", method = RequestMethod.POST)
     public void handleFormUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "ax_file_input", required = false) MultipartFile file) throws IOException {
 		System.out.println("Upload Images");
@@ -96,6 +106,13 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 					file.transferTo(new File(filePath.getAbsolutePath() + "\\" + fileName));  
 					String destinationFilePath = "/static/upload/img/" + DateFormatUtils.format(new Date(), "yyyyMM") + "/" + fileName;
 					System.out.println(destinationFilePath);
+					Attachment attachment = new Attachment();
+					attachment.setFileName(originalFilename);
+					attachment.setFilePath(destinationFilePath);
+					attachment.setType((short) 1);
+					attachment.setTypeId(new Long(productid));
+					doSave(attachment, request, response);
+					productAddProfileImage(attachment, productid, request, response);
 					json.put("status", "OK");
 					json.put("url", request.getContextPath() + destinationFilePath);
 					json.put("message", "g_uploadSuccess"); //requestContext.getMessage("g_uploadSuccess")
@@ -111,6 +128,27 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
         }
         writeJSON(response, json.toString());
     }
+	
+	// 保存Attachment的实体Bean
+	@RequestMapping(value = "/saveAttachment", method = { RequestMethod.POST, RequestMethod.GET })
+	public void doSave(Attachment entity, HttpServletRequest request, HttpServletResponse response) throws IOException {  
+		ExtJSBaseParameter parameter = ((ExtJSBaseParameter) entity);
+		attachmentService.persist(entity);
+	}
+	
+	// 保存Attachment的实体Bean
+	@RequestMapping(value = "/attachmentForProductProfile", method = { RequestMethod.POST, RequestMethod.GET })
+	public void productAddProfileImage(Attachment entity, int productid, HttpServletRequest request, HttpServletResponse response) throws IOException {  
+		Product product = productService.get(productid);
+		if(product!=null){
+			System.out.println("Trying to add profile image for product: "+product.getName() + "||| profileIamge: "+ product.getProfileimage()); 
+			if(product.getProfileimage() == null ){
+				System.out.println("Profileimage empty. Trying to add "); 
+				product.setProfileimage(entity.getFilePath());
+				productService.merge(product);
+			} 
+		}
+	}
 	
 //	@RequestMapping(value = "/uploadImages", method = RequestMethod.POST)
 //	public void uploadAttachement(HttpServletRequest request, HttpServletResponse response) throws Exception {
