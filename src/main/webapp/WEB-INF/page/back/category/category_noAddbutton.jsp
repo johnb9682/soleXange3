@@ -11,7 +11,7 @@
 		<table id="grid-table"></table>
 
 		<div id="grid-pager"></div>
-		
+
 		<script type="text/javascript">
 			var $path_base = "${contextPath}/static";//in Ace demo this will be used for editurl parameter
 		</script>
@@ -151,17 +151,17 @@
         		
         		// navButtons
         		jQuery(grid_selector).jqGrid('navGrid', pager_selector, { // navbar options
-        			edit : <shiro:hasPermission name="${ROLE_KEY}:department:edit">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:department:edit">false</shiro:lacksPermission>,
+        			edit : <shiro:hasPermission name="${ROLE_KEY}:dict:edit">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:edit">false</shiro:lacksPermission>,
         			editicon : 'ace-icon fa fa-pencil blue',
-        			add : true,
+        			add : <shiro:hasPermission name="${ROLE_KEY}:dict:add">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:add">false</shiro:lacksPermission>,
         			addicon : 'ace-icon fa fa-plus-circle purple',
-        			del : <shiro:hasPermission name="${ROLE_KEY}:department:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:department:delete">false</shiro:lacksPermission>,
+        			del : <shiro:hasPermission name="${ROLE_KEY}:dict:delete">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:delete">false</shiro:lacksPermission>,
         			delicon : 'ace-icon fa fa-trash-o red',
-        			search : <shiro:hasPermission name="${ROLE_KEY}:department:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:department:search">false</shiro:lacksPermission>,
+        			search : <shiro:hasPermission name="${ROLE_KEY}:dict:search">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:search">false</shiro:lacksPermission>,
         			searchicon : 'ace-icon fa fa-search orange',
         			refresh : true,
         			refreshicon : 'ace-icon fa fa-refresh blue',
-        			view : <shiro:hasPermission name="${ROLE_KEY}:department:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:department:view">false</shiro:lacksPermission>,
+        			view : <shiro:hasPermission name="${ROLE_KEY}:dict:view">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:view">false</shiro:lacksPermission>,
         			viewicon : 'ace-icon fa fa-search-plus grey'
         		}, {
         			// edit record form
@@ -231,7 +231,7 @@
         		})
         		
         		// add custom button to export the data to excel
-        		if(<shiro:hasPermission name="${ROLE_KEY}:department:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:department:export">false</shiro:lacksPermission>){
+        		if(<shiro:hasPermission name="${ROLE_KEY}:dict:export">true</shiro:hasPermission><shiro:lacksPermission name="${ROLE_KEY}:dict:export">false</shiro:lacksPermission>){
     				jQuery(grid_selector).jqGrid('navButtonAdd', pager_selector,{
    					   caption : "",
    				       title : "导出Excel",
@@ -253,7 +253,7 @@
    				    	   	   rows = rows + "\n"; // output each row with end of line
    				    	   }
    				    	   rows = rows + "\n"; // end of line at the end
-   				    	   var form = "<form name='csvexportform' action='${contextPath}/sys/department/operateDepartment?oper=excel' method='post'>";
+   				    	   var form = "<form name='csvexportform' action='${contextPath}/sys/dict/operateDict?oper=excel' method='post'>";
    				    	   form = form + "<input type='hidden' name='csvBuffer' value='" + encodeURIComponent(rows) + "'>";
    				    	   form = form + "</form><script>document.csvexportform.submit();</sc" + "ript>";
    				    	   OpenWindow = window.open('', '');

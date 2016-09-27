@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+ 
 import com.soleXange.core.Constant;
 import com.soleXange.core.JavaEEFrameworkBaseController;
 import com.soleXange.model.sys.Category; 
@@ -98,5 +98,49 @@ public class CategoryController extends JavaEEFrameworkBaseController<Category> 
 		}
 		parameter.setSuccess(true);
 		writeJSON(response, parameter);
+	} 
+
+	// Operate category 的delete、export Excel、edit and add
+	@RequestMapping(value = "/operateCategory", method = { RequestMethod.POST, RequestMethod.GET })
+	public void operatecategory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String oper = request.getParameter("oper");
+		String id = request.getParameter("id");
+		if (oper.equals("del")) {
+			//String[] ids = id.split(",");
+			//deleteCategory(request, response, (Long[]) ConvertUtils.convert(ids, Long.class));
+		} else if (oper.equals("excel")) {
+			response.setContentType("application/msexcel;charset=UTF-8");
+			try {
+				response.addHeader("Content-Disposition", "attachment;filename=file.xls");
+				OutputStream out = response.getOutputStream();
+				out.write(URLDecoder.decode(request.getParameter("csvBuffer"), "UTF-8").getBytes());
+				out.flush();
+				out.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			Map<String, Object> result = new HashMap<String, Object>();
+			String description = request.getParameter("description");
+			String name = request.getParameter("name");
+			String parentid_string = request.getParameter("parentid"); 
+			Category category = null;
+			if (oper.equals("edit")) {
+				//category = categoryService.get(Long.valueOf(id));
+			} else {
+				Category entity = new Category();
+				entity.setDescription(description);
+				entity.setName(name);
+				entity.setParentid(parentid_string == "" ? null : Integer.valueOf(parentid_string)); 
+				if (oper.equals("edit")) {
+					//entity.setId(Long.valueOf(id));
+					entity.setCmd("edit");
+					doSave(entity, request, response);
+				} else if (oper.equals("add")) {
+					entity.setCmd("new");
+					doSave(entity, request, response);
+				}
+			}
+		}
 	}
 }
