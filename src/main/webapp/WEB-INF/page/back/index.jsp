@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title>MsgPost</title>
+        <title>soleXange</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <meta http-equiv="refresh" content="1800" />
         <!-- bootstrap & fontawesome -->
@@ -58,7 +58,7 @@
                     <!-- #section:basics/navbar.layout.brand -->
                     <a href="#" class="navbar-brand">
                         <small>
-                            <i class="fa fa-leaf"></i>MsgPost
+                            <i class="fa fa-leaf"></i>SoleXange
                         </small>
                     </a>
                     <!-- /section:basics/navbar.layout.brand -->
@@ -81,15 +81,7 @@
                                 </span>
                                 <i class="ace-icon fa fa-caret-down"></i>
                             </a>
-                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                                <!-- 
-                                <li>
-                                    <a href="#">
-                                        <i class="ace-icon fa fa-cog"></i>
-										设置
-                                    </a>
-                                </li>
-                                -->
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"> 
                                 <li>
                                     <a data-url="page/userprofile" href="home#page/user/userprofile">
                                         <i class="ace-icon fa fa-user"></i>
@@ -156,14 +148,19 @@
                     <li class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-user"></i>
-                            <span class="menu-text">Sale</span>
+                            <span class="menu-text">Product</span>
                             <b class="arrow fa fa-angle-down"></b>
                         </a> 
 						<b class="arrow"></b>
 						<ul class="submenu"> 
 	                        <li class="">
                                 <a data-url="page/product/newproduct" href="home#page/product/newproduct">
-                                    <i class="menu-icon fa fa-user"></i>newProduct
+                                    <i class="menu-icon fa fa-user"></i>New Product
+                                </a> 
+                            </li> 
+                            <li class="">
+                                <a data-url="page/product/productgallary" href="home#page/product/productgallary">
+                                    <i class="menu-icon fa fa-user"></i>Product Gallery
                                 </a> 
                             </li> 
          				</ul>                    

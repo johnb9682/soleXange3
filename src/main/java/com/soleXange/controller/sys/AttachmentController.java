@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -99,10 +101,13 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 			} else{
 				try {
 					String fileName = sdf.format(new Date()) + JavaEEFrameworkUtils.getRandomString(3) + originalFilename.substring(originalFilename.lastIndexOf("."));
-					File filePath = new File(getClass().getClassLoader().getResource("/").getPath().replace("/WEB-INF/classes/", "/static/upload/img/" + DateFormatUtils.format(new Date(), "yyyyMM")));
+					File filePath_IncludeExtraCharacters  = new File(getClass().getClassLoader().getResource("/").getPath().replace("/WEB-INF/classes/", "/static/upload/img/" + DateFormatUtils.format(new Date(), "yyyyMM")));
+					String filePath_ExcludeExtraCharacters = URLDecoder.decode(filePath_IncludeExtraCharacters.getAbsolutePath(), "utf-8");
+					File filePath = new File(filePath_ExcludeExtraCharacters);
 					if (!filePath.exists()) {
 						filePath.mkdirs();
 					} 
+					System.out.println("File Absolute path:" + filePath.getAbsolutePath());
 					file.transferTo(new File(filePath.getAbsolutePath() + "\\" + fileName));  
 					String destinationFilePath = "/static/upload/img/" + DateFormatUtils.format(new Date(), "yyyyMM") + "/" + fileName;
 					System.out.println(destinationFilePath);
