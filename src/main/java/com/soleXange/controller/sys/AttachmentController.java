@@ -51,6 +51,7 @@ import com.soleXange.service.sys.AttachmentService;
 import com.soleXange.service.sys.ProductService;
 
 import core.support.ExtJSBaseParameter;
+import core.support.ImageProcess;
 import core.util.JavaEEFrameworkUtils;
 import net.sf.json.JSONObject;
 
@@ -108,7 +109,8 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 						filePath.mkdirs();
 					} 
 					System.out.println("File Absolute path:" + filePath.getAbsolutePath());
-					file.transferTo(new File(filePath.getAbsolutePath() + "\\" + fileName));  
+					File imageFile = new File(filePath.getAbsolutePath() + "\\" + fileName);
+					file.transferTo(imageFile);  
 					String destinationFilePath = "/static/upload/img/" + DateFormatUtils.format(new Date(), "yyyyMM") + "/" + fileName;
 					System.out.println(destinationFilePath);
 					Attachment attachment = new Attachment();
@@ -117,7 +119,7 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 					attachment.setType((short) 1);
 					attachment.setTypeId(new Long(productid));
 					doSave(attachment, request, response);
-					productAddProfileImage(attachment, productid, request, response);
+					productAddProfileImage(attachment, productid, imageFile, request, response);
 					json.put("status", "OK");
 					json.put("url", request.getContextPath() + destinationFilePath);
 					json.put("message", "g_uploadSuccess"); //requestContext.getMessage("g_uploadSuccess")
@@ -143,13 +145,26 @@ public class AttachmentController extends JavaEEFrameworkBaseController<Attachme
 	
 	// 保存Attachment的实体Bean
 	@RequestMapping(value = "/attachmentForProductProfile", method = { RequestMethod.POST, RequestMethod.GET })
-	public void productAddProfileImage(Attachment entity, int productid, HttpServletRequest request, HttpServletResponse response) throws IOException {  
+	public void productAddProfileImage(Attachment entity, int productid, File imageFile, HttpServletRequest request, HttpServletResponse response) throws IOException {  
 		Product product = productService.get(productid);
 		if(product!=null){
 			System.out.println("Trying to add profile image for product: "+product.getName() + "||| profileIamge: "+ product.getProfileimage()); 
 			if(product.getProfileimage() == null ){
 				System.out.println("Profileimage empty. Trying to add "); 
-				product.setProfileimage(entity.getFilePath());
+				String originalFilename = entity.getFileName();
+				String fileName = sdf.format(new Date()) + JavaEEFrameworkUtils.getRandomString(3) + originalFilename.substring(originalFilename.lastIndexOf("."));
+				File filePath_IncludeExtraCharacters  = new File(getClass().getClassLoader().getResource("/").getPath().replace("/WEB-INF/classes/", "/static/upload/img/productprofile/" + DateFormatUtils.format(new Date(), "yyyyMM")));
+				String filePath_ExcludeExtraCharacters = URLDecoder.decode(filePath_IncludeExtraCharacters.getAbsolutePath(), "utf-8");
+				File filePath = new File(filePath_ExcludeExtraCharacters);  
+				if (!filePath.exists()) {
+					filePath.mkdirs();
+				} 
+				File destinationFile = new File(filePath.getAbsolutePath() + "\\" + fileName);
+				File file = ImageProcess.cropImageSquareFromCenter(imageFile, destinationFile);
+				String destinationFilePath = "/static/upload/img/productprofile/" + DateFormatUtils.format(new Date(), "yyyyMM") + "/" + fileName;
+				System.out.println(file.getAbsolutePath());
+				System.out.println(destinationFilePath);
+				product.setProfileimage(destinationFilePath);
 				productService.merge(product);
 			} 
 		}

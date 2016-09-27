@@ -5,7 +5,8 @@
 
 <link rel="stylesheet" href="${contextPath}/static/assets/css/jquery-ui.css" />
 <link rel="stylesheet" href="${contextPath}/static/assets/css/ui.jqgrid.css" />
-<link rel="stylesheet" href="${contextPath}/static/assets/js/nanogalary/dist/css/nanogallery.min.css" type="text/css" /> 
+<link rel="stylesheet" href="${contextPath}/static/assets/js/nanogalary/dist/css/nanogallery_custom.min.css" type="text/css" /> 
+<!-- <link rel="stylesheet" href="${contextPath}/static/assets/js/nanogalary/dist/css/themes/clean/nanogallery_clean.min.css" type="text/css" />  -->
 
 <div id="nanoGallery">
 </div>
@@ -38,13 +39,14 @@
 	  	//inline scripts related to this page
 		jQuery(document).ready(function () {
   			jQuery("#nanoGallery").nanoGallery({
+  				//theme: 'clean',
   				items: remoteDateSource,
-				thumbnailWidth: '80 XS80 SM150 LA250 XL400',
-			  	thumbnailHeight: '80 XS80 SM150 LA250 XL400',
+				thumbnailWidth: '40C XS60C SM80C LA150C XL250C',
+			  	thumbnailHeight: '40C XS60C SM80C LA150C XL250C',
 			    thumbnailAlignment: 'center',
 			    maxItemsPerLine: 5,
-			    thumbnailGutterHeight: 30,
-			    thumbnailGutterWidth: 30,
+			    thumbnailGutterHeight: 10,
+			    thumbnailGutterWidth: 10,
 			    thumbnailLabel: {
 		            position: 'overImageOnMiddle',
 		            display: true,
