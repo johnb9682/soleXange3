@@ -154,7 +154,7 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 			obj.put("src", element.getProfileimage()); 
 			obj.put("srct", element.getProfileimage());    
 			obj.put("title", element.getName());  
-			obj.put("destURL", "http://localhost:8080/soleXange/home#page/product/productdetail?productid="+element.getProductid());  
+			obj.put("destURL", "/soleXange/home#page/product/productdetail?productid="+element.getProductid());  //http://localhost:8080/soleXange
 			obj.put("description", "Price: " + element.getPrice());  
 			obj.put("size", element.getSize());  
 			obj.put("price", element.getPrice());  

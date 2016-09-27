@@ -61,7 +61,7 @@
 		        },
 		        */
 		        thumbnailHoverEffect:'borderLighter,labelAppear75',
-    			itemsBaseURL: '${contextPath}',
+    			itemsBaseURL: getContextPath(),
 				locationHash: false
   			});
 		});
