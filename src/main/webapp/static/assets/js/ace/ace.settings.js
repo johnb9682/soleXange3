@@ -4,7 +4,7 @@
 */
 (function($ , undefined) {
 
- ace.settings.main_container_fixed(null, this.checked);	
+ //ace.settings.main_container_fixed(null, this.checked);	
 	
  $('#ace-settings-btn').on(ace.click_event, function(e){
 	e.preventDefault();
