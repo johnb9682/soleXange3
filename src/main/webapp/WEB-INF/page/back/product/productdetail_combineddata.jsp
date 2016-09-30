@@ -16,40 +16,53 @@
  
 <!-- slider css  -->
 <style>
-	#gallery-1 {
-		width: 100%;
+	/* #gallery-1 {
+		width: 100%; 
 		-webkit-user-select: none;
 		-moz-user-select: none;  
-		user-select: none;
-		/*
-		 width: 100%;
- 		 height: 300px;
-		*/ 
+		user-select: none; 
+	} */
+	.royalSlider {
+		width: 100%; 
+		height: 100%;  
 	} 
+	.royalSlider img {
+	    width: 100%;
+	    height: auto; 
+	    -webkit-transition: all 0.3s ease-out;
+	    -moz-transition: all 0.3s ease-out;
+	    transition: all 0.3s ease-out;
+	
+	    -webkit-transform: scale(0.9);  
+	    -moz-transform: scale(0.9); 
+	    -ms-transform: scale(0.9);
+	    -o-transform: scale(0.9);
+	    transform: scale(0.9);
+	}
+	.rsActiveSlide img {
+	    opacity: 1;
+	    -webkit-transform: scale(10);  
+	    -moz-transform: scale(1); 
+	    -ms-transform: scale(1);
+	    -o-transform: scale(1);
+	    transform: scale(1);
+	}
 </style>
 
 <div class="col-xs-12" id="page">
 	<div class="row" >
 		<!-- simple image slide-->   
 		<div class="col-xs-6" >    
-			<div class="royalSlider rsDefault" id="gallery-1">  
-			 
-				<a class="rsImg" href="${contextPath}/static/upload/img/201609/20160928130905569533.jpg"><img class="rsTmb" src="${contextPath}/static/upload/img/201609/20160928130905569533.jpg" /></a>
-				<a class="rsImg" href="${contextPath}/static/upload/img/201609/20160928130905571852.jpg"><img class="rsTmb" src="${contextPath}/static/upload/img/201609/20160928130905571852.jpg" /></a>
-				<a class="rsImg" href="${contextPath}/static/upload/img/201609/20160928130905575273.jpg"><img class="rsTmb" src="${contextPath}/static/upload/img/201609/20160928130905575273.jpg" /></a>
-				 
-				<!--  
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130905569533.jpg" alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130905571852.jpg"alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130905575273.jpg" alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130907695495.jpg" alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130907695989.jpg" alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130908193791.jpg" alt="This text will be IGNORED!" />
-				<img class="rsImg" src="${contextPath}/static/upload/img/201609/20160928130908702871.jpeg" alt="This text will be IGNORED!" /> 
-				-->
+			<div class="royalSlider rsDefault" id="royalSlider"> 
+				<c:forEach var="productimage" items="${productimage}">
+					<div class="rsContent">
+						<a href="${contextPath}/<c:out value='${productimage.imagepath}'/>" class="rsImg" data-rsbigimg="${contextPath}/<c:out value='${productimage.imagepath}'/>">
+	                        <img class="img-responsive rsTmb img-responsive imagecache imagecache-uc_thumbnail" src="${contextPath}/<c:out value='${productimage.imagepath}'/>" />
+	                    </a>
+                    </div>
+				</c:forEach>  
 			</div>	   
-		</div>
-		<!--  <div class="col-xs-6" id="productimage"><ul></ul></div> -->
+		</div> 
 		
 		<div class="col-xs-6" id="productinfo">    
 			<div class="row" >
@@ -113,8 +126,12 @@
 				</div>
 			</div>
 		</div>
-	<!-- END ROW -->	
-	<div class="row" ><div class="space-16"></div></div>	
+	<!-- END ROW -->		
+	<div class="row" ><div class="space-16"></div></div>
+	<div class="row" ><div class="space-16"></div></div>
+	<div class="row" ><div class="space-16"></div></div>
+	<div class="row" ><div class="space-16"></div></div>
+	<div class="row" ><div class="space-16"></div></div>
 	</div>
 </div> 
 
@@ -163,7 +180,7 @@
 	}); 
 	
 	AppendProductTitle(productInfo);
-	AppendProductImages(productImageURL);
+	//AppendProductImages(productImageURL);
 	AppendProductSize(productInfo); 
 	AppendProductPrice(productInfo); 
 	AppendProductdescription(productInfo); 
@@ -172,17 +189,18 @@
 	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {   
 		//hljs.initHighlightingOnLoad();
 		jQuery(document).ready(function($) { 
-			$('#gallery-1').royalSlider({ 
+			$('#royalSlider').royalSlider({ 
 		    	fullscreen: {
 			    	enabled: true,
 			    	nativeFS: true
-			    }, 
+			    },  
 			    controlNavigation: 'thumbnails',
 			    autoScaleSlider: true, 
-			    //autoScaleSliderWidth: 960,     
-			    //autoScaleSliderHeight: 850,
-			    loop: false,
-			    imageScaleMode: 'fit-if-smaller',
+			    autoScaleSliderWidth: 960,     
+			    autoScaleSliderHeight: 850,
+			    autoHeight: true,
+			    loop: true,
+			    imageScaleMode: 'fill',
 			    navigateByClick: true,
 			    numImagesToPreload:2,
 			    arrowsNav:true,
@@ -193,32 +211,19 @@
 			    globalCaption: true,
 			    globalCaptionInside: false,
 			    thumbs: {
+			    	fitInViewport:true,
 					appendSpan: true,
 					firstMargin: true,
-					paddingBottom: 4
-			    }
+					paddingBottom: 4, 
+			    },
+			    autoPlay: {
+		    		// autoplay options go gere
+		    		enabled: true,
+		    		pauseOnHover: true
+		    	}
 			});  
 		}); 
-	});   
-	
-	//for royalslider image slider
-	function AppendProductImages(productImageURL) {
-		//<a class="rsImg" href="${contextPath}/static/upload/img/201609/20160928130905569533.jpg">
-			//<img class="rsTmb" src="${contextPath}/static/upload/img/201609/20160928130905569533.jpg" /></a>
-		var element = document.getElementById("gallery-1"); 
-		alert("TEST"); 
-		for (var i in productImageURL) { 
-			var a = document.createElement("a");  
-			a.class = "rsImg";
-			a.href = getContextPath() + productImageURL[i].imagepath;  
-			var img = document.createElement("img");  
-			img.src = getContextPath() + productImageURL[i].imagepath;  
-			img.alt = "image desc"; 
-			img.class = "rsImg";
-			a.appendChild(img);     
-			element.appendChild(a);     
-		}  
-	}
+	});    
 	 
 	function AppendProductTitle(productInfo) {
 		var h = document.createElement("H1");
@@ -248,20 +253,6 @@
 	    h.appendChild(t);
 	    var node = document.getElementById("description"); 
 	    node.appendChild(h); 
-	}
-	// for tiksluscarousel image slider
-	/*
-	function AppendProductImages(productImageURL) {
-		var node = document.getElementById("productimage"); 
-		var element = node.getElementsByTagName("UL")[0];
-		for (var i in productImageURL) {   
-			var newItem = document.createElement("li");  
-			var img = document.createElement("img");  
-			img.src = getContextPath() + productImageURL[i].imagepath;  
-			newItem.appendChild(img);    
-			element.appendChild(newItem);   
-		} 
-	}
-	*/
+	} 
 	
 </script>

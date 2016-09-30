@@ -65,8 +65,9 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 	
 	/* 
 	 *  展示单个product 的信息
+	 *  对应productdetail
 	 */ 
-	@RequestMapping(value = "/productdetail", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping(value = "/productdetail_expired", method = { RequestMethod.POST, RequestMethod.GET })
 	public String productDetail(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException { 
 		Integer productid = Integer.valueOf(request.getParameter("productid"));
 		JSONArray jsonArray = new JSONArray(); 
@@ -83,6 +84,30 @@ public class ProductController extends JavaEEFrameworkBaseController<Product> im
 		result.put("data", jsonArray);
 		map.addAttribute("products", result);
 		return "back/product/productdetail";
+	} 
+	
+	/* 
+	 *  展示单个product 的信息
+	 *  对应productdetail_conbineddata
+	 *  有model
+	 */ 
+	@RequestMapping(value = "/productdetail", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView productDetailConbinedData(HttpServletRequest request, HttpServletResponse response, ModelMap map) throws IOException { 
+		Integer productid = Integer.valueOf(request.getParameter("productid"));
+		JSONArray jsonArray = new JSONArray(); 
+		List<Object[]> list = productService.queryProductWithProductID(productid);
+		for(ListIterator<Object[]> iter = list.listIterator(); iter.hasNext();){ 
+			Object[] element = iter.next();    
+			JSONObject obj = new JSONObject();  
+			obj.put("productid", element[0]);  
+			obj.put("imagepath", element[1]);  
+		    jsonArray.add(obj);    
+		    System.out.println(obj);
+		} 
+		//Map<String, Object> result = new HashMap<String, Object>(); 
+		//result.put("image", jsonArray);
+		//map.addAttribute("products", result);
+		return new ModelAndView("back/product/productdetail_combineddata", "productimage", jsonArray);
 	} 
 
 	// 查询字典的表格，包括分页、搜索和排序
