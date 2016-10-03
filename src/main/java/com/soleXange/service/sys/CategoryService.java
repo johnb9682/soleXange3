@@ -13,4 +13,5 @@ public interface CategoryService extends Service<Category> {
 
 	List<Category> queryCategoryWithSubList(List<Category> resultList);
 
+	List<Category> queryAllCategoryList();
 }

@@ -58,7 +58,7 @@
                     <!-- #section:basics/navbar.layout.brand -->
                     <a href="#" class="navbar-brand">
                         <small>
-                            <i class="fa fa-leaf"></i>SoleXange
+                            <i class=""></i>SoleXange
                         </small>
                     </a>
                     <!-- /section:basics/navbar.layout.brand -->
@@ -125,8 +125,8 @@
                 <!-- /.sidebar-shortcuts -->
                 <ul class="nav nav-list">
                 	<li class="">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-comments-o"></i>
+                        <a href="home#page/category" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-desktop"></i>
                             <span class="menu-text">Management</span>
                             <b class="arrow fa fa-angle-down"></b>
                         </a> 
@@ -134,7 +134,7 @@
 						<ul class="submenu"> 
 	                        <li class="">
                                 <a data-url="page/category/category" href="home#page/category/category">
-                                    <i class="menu-icon fa fa-comments-o"></i>Category 
+                                    <i class="menu-icon fa fa-list"></i>Category 
                                 </a> 
                             </li> 
                             <li class="">
@@ -145,9 +145,9 @@
          				</ul>                     
                     </li>
                     <li class="">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-user"></i>
-                            <span class="menu-text">Product</span>
+                        <a href="home#page/product/newproduct" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-money"></i>
+                            <span class="menu-text">Sell</span>
                             <b class="arrow fa fa-angle-down"></b>
                         </a> 
 						<b class="arrow"></b>
@@ -156,14 +156,80 @@
                                 <a data-url="page/product/newproduct" href="home#page/product/newproduct">
                                     <i class="menu-icon fa fa-user"></i>New Product
                                 </a> 
-                            </li> 
-                            <li class="">
-                                <a data-url="page/product/productgallary" href="home#page/product/productgallary">
-                                    <i class="menu-icon fa fa-user"></i>Product Gallery
-                                </a> 
-                            </li> 
+                            </li>  
          				</ul>                    
-                    </li> 
+                    </li>  
+                    <li class="">
+                        <a href="home#page/product" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text">Product</span>
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a> 
+                        <b class="arrow"></b>
+						<ul class="submenu">  
+                            <li class="">
+                                <a data-url="page/product/productgallary?option=topsellers" href="home#page/product/productgallary?option=topsellers">
+                                    <i class="menu-icon"></i>Top Sellers
+                                </a> 
+                            </li>  
+                            <li class="">
+                                <a data-url="page/product/productgallary?option=newarrivals" href="home#page/product/productgallary?option=newarrivals">
+                                    <i class="menu-icon"></i>New Arrivals
+                                </a> 
+                            </li>  
+		                    <c:forEach var="category" items="${menuList}">
+		                    	<li class="">
+			                    	<c:choose>
+					                	<c:when test="${category.subCategoryList.size() > 0}"> 
+					                		<a class="dropdown-toggle" href="#">
+												<i class="menu-icon"></i><c:out value="${category.name}"/> 
+												<b class="arrow fa fa-angle-down"></b> 
+											</a>
+											<b class="arrow"></b>
+											<ul class="submenu">
+							                	<c:forEach var="subCategoryList" items="${category.subCategoryList}">
+						                     		<li class="">
+					                     				<c:choose>
+						                					<c:when test="${subCategoryList.subCategoryList.size() > 0}">
+						                						<a class="dropdown-toggle" href="#">
+																	<i class="menu-icon"></i><c:out value="${subCategoryList.name}"/> 
+																	<b class="arrow fa fa-angle-down"></b> 
+																</a>
+																<b class="arrow"></b>
+																<ul class="submenu">
+							                						<c:forEach var="subSubCategoryList" items="${subCategoryList.subCategoryList}">
+							                							<li class="">
+																			<a data-url="home#<c:out value='${subSubCategoryList.dataurl}'/>&option=category" href="home#<c:out value='${subSubCategoryList.dataurl}'/>&option=category">
+																				<i class="menu-icon"></i><c:out value="${subSubCategoryList.name}"/>
+																			</a> 
+																		</li>
+							                						</c:forEach>
+							                					</ul>
+						                					</c:when>
+						                					<c:otherwise> 
+						                						<li class="">
+									                                <a data-url="<c:out value='${subCategoryList.dataurl}'/>&option=category" href="<c:out value='${subCategoryList.dataurl}'/>&option=category">
+									                                    <i class="menu-text"><c:out value="${subCategoryList.name}"/></i> 
+									                                </a> 
+									                            </li>  
+						                					</c:otherwise>
+						                				</c:choose>
+						                     		</li>
+							                    </c:forEach> 
+						                    </ul>
+						                </c:when>
+						                <c:otherwise> 
+				                            <li class="">
+				                                <a data-url="<c:out value='${category.dataurl}'/>" href="<c:out value='${category.dataurl}'/>">
+				                                    <i class="menu-text"><c:out value="${category.name}"/></i> 
+				                                </a> 
+				                            </li>  
+						                </c:otherwise>
+					                </c:choose>
+				                </li>
+		                    </c:forEach>
+	                    </ul>     
+                    </li>
                 </ul>
                 <!-- /.nav-list -->
                 <!-- #section:basics/sidebar.layout.minimize -->

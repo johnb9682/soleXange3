@@ -1,15 +1,20 @@
 package com.soleXange.model.sys.param;
 
+import java.util.List;
+
+import com.soleXange.model.sys.Category;
+
 import core.support.ExtJSBaseParameter;
 
 /**
- * 字典的参数类
- * @框架唯一的升级和技术支持地址：http://shop111863449.taobao.com
+ * Category的参数类
+ * @Author: Bi Ran
  */
 public class CategoryParameter extends ExtJSBaseParameter {
 
 	private String $eq_categoryKey;
 	private String $like_categoryValue;
+	private List<Category> subCategoryList;
 
 	public String get$eq_categoryKey() {
 		return $eq_categoryKey;
@@ -26,5 +31,12 @@ public class CategoryParameter extends ExtJSBaseParameter {
 	public void set$like_categoryValue(String $like_categoryValue) {
 		this.$like_categoryValue = $like_categoryValue;
 	}
+	
+	public List<Category> getSubCategoryList() {
+		return subCategoryList;
+	}
 
+	public void setSubCategoryList(List<Category> subCategoryList) {
+		this.subCategoryList = subCategoryList;
+	}
 }

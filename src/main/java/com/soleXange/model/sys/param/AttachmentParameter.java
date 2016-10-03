@@ -26,5 +26,5 @@ public class AttachmentParameter extends ExtJSBaseParameter {
 	public void setEpcId(String epcId) {
 		this.epcId = epcId;
 	}
-
+	
 }

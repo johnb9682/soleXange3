@@ -35,6 +35,8 @@ public class Category extends CategoryParameter {
 	private String description;
 	@Column(name = "name")
 	private String name; 
+	@Column(name = "dataurl")
+	private String dataurl; 
 
 	public Category() {
 
@@ -70,6 +72,14 @@ public class Category extends CategoryParameter {
 
 	public void setName(String name) {
 		this.name = name;
+	} 
+	
+	public String getDataurl() {
+		return dataurl;
+	}
+
+	public void setDataurl(String dataurl) {
+		this.dataurl = dataurl;
 	} 
 	
 	/*

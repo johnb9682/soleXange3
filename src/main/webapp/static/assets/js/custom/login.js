@@ -143,7 +143,7 @@ jQuery(function($) {
 				complete : function(xmlRequest) {
 					var returninfo = eval("(" + xmlRequest.responseText + ")");
 					if (returninfo.result == 1) {
-						document.location.href = getContextPath() + "/home#page/product/productgallary";
+						document.location.href = getContextPath() + "/home#page/product/productgallary?option=topsellers";
 					} else if (returninfo.result == -1) {
 						$("#loginTip").html("用户名有误或已被禁用");
 					} else if (returninfo.result == -2) {
