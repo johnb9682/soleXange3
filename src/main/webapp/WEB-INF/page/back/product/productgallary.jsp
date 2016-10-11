@@ -8,9 +8,101 @@
 <link rel="stylesheet" href="${contextPath}/static/assets/js/nanogalary/dist/css/nanogallery_custom.min.css" type="text/css" /> 
 <!-- <link rel="stylesheet" href="${contextPath}/static/assets/js/nanogalary/dist/css/themes/clean/nanogallery_clean.min.css" type="text/css" />  -->
 
-<div id="nanoGallery">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="row space-12"></div>
+		<div class="row">
+			<div class="col-xs-12"> 
+				<form class="form-search"> 
+					<div class="btn-group">  
+						<input type="text" class="btn-group search-query col-xs-8 pull-left" placeholder="Product Name" />
+						<div class="btn-group col-xs-1 center">
+							<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle">
+								Price
+								<i class="ace-icon fa fa-angle-down icon-on-right"></i>
+							</button> 
+							<ul class="dropdown-menu">
+								<li><a href="#" value="">${"<= 100"}</a></li>  
+								<li><a href="#" value="">100~200</a></li>  
+								<li><a href="#" value="">200~300</a></li>
+								<li><a href="#" value="">300~400</a></li>
+								<li><a href="#" value="">400~500</a></li>
+								<li><a href="#" value="">${">= 500"}</a></li>
+								<li class="divider"></li> 
+								<li>
+									<a href="#">Separated link</a>
+								</li>
+							</ul>
+						</div>
+						<div class="btn-group col-xs-1 center">
+							<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle">
+								Size
+								<i class="ace-icon fa fa-angle-down icon-on-right"></i>
+							</button> 
+							<ul class="dropdown-menu">
+								<li><a href="#" id="4" >4</a></li>
+								<li><a href="#" value="4.5">4.5</a></li>  
+								<li><a href="#" value="5">5</a></li>  
+								<li><a href="#" value="5.5">5.5</a></li>  
+								<li><a href="#" value="6">6</a></li>  
+								<li><a href="#" value="6.5">6.5</a></li>  
+								<li><a href="#" value="7">7</a></li>  
+								<li><a href="#" value="7.5">7.5</a></li>  
+								<li><a href="#" value="8">8</a></li>  
+								<li><a href="#" value="8.5">8.5</a></li>  
+								<li><a href="#" value="9">9</a></li>  
+								<li><a href="#" value="9.5">9.5</a></li>  
+								<li><a href="#" value="10">10</a></li>  
+								<li><a href="#" value="10.5">10.5</a></li>  
+								<li><a href="#" value="11">11</a></li>  
+								<li><a href="#" value="11.5">11.5</a></li>  
+								<li><a href="#" value="12">12</a></li>
+								<li><a href="#" value="12.5">12.5</a></li>    
+								<li><a href="#" value="13">13</a></li>     
+								<li><a href="#" value="13.5">13.5</a></li>
+								<li><a href="#" value="14">14</a></li>     
+							</ul>
+						</div>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-primary btn-blue btn-sm">
+								<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+								Search
+							</button>
+						</span> 
+					</div>
+				</form> 
+			</div>
+		</div> 
+		<div class="row space-12"></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="nanoGallery"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 center">
+				<ul class="pagination">
+					<li class="disabled">
+						<a href="#">
+							<i class="ace-icon fa fa-angle-double-left"></i>
+						</a>
+					</li> 
+					<li class="active">
+						<a href="#">1</a>
+					</li> 
+					<li>
+						<a href="#">2</a>
+					</li>  
+					<li>
+						<a href="#">
+							<i class="ace-icon fa fa-angle-double-right"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
-
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
 	var scripts = [null, "${contextPath}/static/assets/js/nanogalary/dist/jquery.nanogallery.min.js"]
