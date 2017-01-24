@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hynnet</groupId>
+	<artifactId>sqljdbc-chs</artifactId>
+	<version>4.0.2206.100</version>
+	<name>Microsoft JDBC Drivers 4.2, 4.1, and 4.0 for SQL Server</name>
+	<description>适用于 SQL Server 的 Microsoft JDBC Driver 4.2、4.1 或 4.0，它是一个 Type 4 JDBC 驱动程序，通过 Java 平台（企业版 5、6、7 和 8）中可用的标准 JDBC 应用程序程序接口 (API) 提供数据库连接。</description>
+	<url>http://maven.hynnet.com/</url>
+	<licenses>
+		<license>
+			<name>hynnet License, Version 2.0</name>
+			<url>http://www.hynnet.com/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>http://issues.hynnet.com/jira/browse/</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:svn:http://svn.hynnet.com/src/trunk</connection>
+		<developerConnection>scm:svn:https://svn.hynnet.com/src/trunk</developerConnection>
+		<url>http://svn.hynnet.com/viewvc/src/trunk</url>
+	</scm>
+	
+	<developers>
+		<developer>
+			<name>dev</name>
+			<id>dev</id>
+			<email>dev@hynnet.com</email>
+			<organization>hynnet, Inc.</organization>
+			<roles>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+	</developers>
+</project>
